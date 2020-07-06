@@ -27,8 +27,8 @@
 
 - name: 'Add SSH key for GitHub'
   copy:
-    src: 'files/id_rsa_github'
-    dest: '/home/ubuntu/.ssh/id_rsa_github'
+    src: 'files/id_rsa_vagrant'
+    dest: '/home/ubuntu/.ssh/id_rsa_vagrant'
     owner: 'ubuntu'
     group: 'ubuntu'
     mode: '0600'

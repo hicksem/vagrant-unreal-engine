@@ -27,6 +27,7 @@ Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "bento/ubuntu-16.04"
+  config.disksize.size = '100GB'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -52,21 +53,21 @@ Vagrant.configure(2) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-
+  
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  #config.vm.provider "virtualbox" do |vb|
+  config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     # Customize the amount of memory on the VM:
-    #vb.memory = "1024"
-  #end
-  
+    vb.memory = "4096"    
+    vb.gui = true
+  end
+
   config.ssh.forward_agent = true
   config.vm.hostname = custom_config['vm_config']['hostname']
   
-  #
   # View the documentation for the provider you are using for more
   # information on available options.
 

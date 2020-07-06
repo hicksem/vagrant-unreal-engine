@@ -11,6 +11,7 @@ To use this box, you need to install the following software.
 
 On initial load you can run this command:
 ```
+vagrant plugin install vagrant-disksize
 vagrant up
 ```
 
@@ -42,7 +43,7 @@ To use SSH with Git you'll need to create a keygen pair
 * [Generating a SSH public key for Git](https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key)
 
 To ensure these files are added to the appropriate place within Vagrant, name the local key file:
-* id_rsa_github
+* id_rsa_vagrant (for the github SSH key)
 * id_rsa_aws 
 
 Instructions on adding an SSH key:
