@@ -1,0 +1,56 @@
+- name: 'Create SSH directory'
+  file:
+    path: '/home/ubuntu/.ssh'
+    state: 'directory'
+    mode: '0755'
+  become_user: 'ubuntu'
+  ignore_errors: 'yes'
+  tags:
+    - 'setup'
+    - 'ssh'
+    - 'aws'
+
+- name: 'Add SSH key for AWS'
+  copy:
+    src: 'files/id_rsa_aws'
+    dest: '/home/ubuntu/.ssh/id_rsa_aws'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+    mode: '0600'
+  become: true
+  become_user: 'ubuntu'
+  ignore_errors: 'yes'
+  tags:
+    - 'setup'
+    - 'ssh'
+    - 'aws'
+
+- name: 'Add SSH key for GitHub'
+  copy:
+    src: 'files/id_rsa_github'
+    dest: '/home/ubuntu/.ssh/id_rsa_github'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+    mode: '0600'
+  become: true
+  become_user: 'ubuntu'
+  ignore_errors: 'yes'
+  tags:
+    - 'setup'
+    - 'ssh'
+    - 'git'
+
+- name: 'Configure SSH key for GitHub and AWS'
+  template:
+    src: 'templates/ssh_config.j2'
+    dest: '/home/ubuntu/.ssh/config'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+    mode: '0644'
+  become: true
+  become_user: 'ubuntu'
+  ignore_errors: 'yes'
+  tags:
+    - 'setup'
+    - 'ssh'
+    - 'config'

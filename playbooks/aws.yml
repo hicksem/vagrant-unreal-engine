@@ -1,0 +1,63 @@
+
+- name: 'Add AWS credentials bash profile'
+  template:
+    src: 'templates/aws_bashrc.j2'
+    dest: '/home/ubuntu/.aws_bashrc'
+    mode: '0600'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+  tags:
+    - 'auth'
+    - 'aws'
+
+- name: 'Create ~/.aws directory'
+  file:
+    path: '/home/ubuntu/.aws/'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+    mode: '0750'
+    state: 'directory'
+  tags:
+    - 'auth'
+    - 'aws'
+
+- name: 'Add AWS credentials file'
+  template:
+    src: 'templates/aws_credentials.j2'
+    dest: '/home/ubuntu/.aws/credentials'
+    mode: '0600'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+  tags:
+    - 'auth'
+    - 'aws'
+
+- name: 'Add AWS config file'
+  copy:
+    src: 'files/aws_config'
+    dest: '/home/ubuntu/.aws/config'
+    mode: '0644'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+  tags:
+    - 'auth'
+    - 'aws'
+
+- name: 'Add .bashrc file'
+  copy:
+    src: '/home/vagrant/.bashrc'
+    dest: '/home/ubuntu/.bashrc'
+    mode: '0644'
+    owner: 'ubuntu'
+    group: 'ubuntu'
+  tags:
+    - 'scripts'
+    - 'environment'
+
+- name: 'Update bashrc to source the AWS credentials profile'
+  lineinfile:
+    path: '/home/ubuntu/.bashrc'
+    line: 'source ~/.aws_bashrc'
+  tags:
+    - 'auth'
+    - 'aws'

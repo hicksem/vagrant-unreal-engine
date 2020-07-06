@@ -1,0 +1,11 @@
+# templates/ssh_config.j2
+
+{{ ansible_managed | comment }}
+
+Host github.com
+IdentityFile /home/ubuntu/.ssh/id_rsa_vagrant
+IdentitiesOnly yes
+
+Host github.com
+IdentityFile /root/.ssh/id_rsa_vagrant
+IdentitiesOnly yes

@@ -1,0 +1,154 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    #####
+    # Install and start system services
+    - name: 'Install pre-requisite software'
+      apt:
+        name:
+        - 'docker.io'
+        - 'docker-compose'
+        - 'nodejs'
+        - 'nodejs-legacy'
+        - 'npm'
+        - 'xfce4'
+        - 'lightdm'
+        - 'leafpad'
+        - 'dnsmasq'
+        - 'zip'
+        - 'unzip'
+        - 'terminator'
+        - 'bash-completion'
+        - 'virtualbox-guest-dkms'
+        - 'virtualbox-guest-utils'
+        - 'linux-image-extra-virtual'
+        - 'virtualbox-guest-x11'
+      tags:
+        - 'packages'
+        - 'apt'
+
+    - name: 'set timezone'
+      timezone:
+        name: America/New_York
+      tags:
+        - 'settings'
+        - 'tz'
+        
+    - name: 'Start the docker daemon'
+      service:
+        name: 'docker'
+        state: 'started'
+        enabled: 'true'
+      tags:
+        - 'services'
+        - 'docker'
+
+    - name: 'Start the dnsmasq daemon'
+      service:
+        name: 'dnsmasq'
+        state: 'started'
+        enabled: 'true'
+      tags:
+        - 'services'
+        - 'dns'
+        
+    #####
+    # Install developer utilities
+    - name: 'Browser set up'
+      include_tasks: browsers.yml
+      args:
+        apply:
+          tags:
+            - 'browsers'
+
+    - name: 'Install apt_packages per user configuration YAML file'
+      apt:
+        name: 
+        - 'git'
+      tags:
+        - 'packages'
+        - 'apt'
+        
+    #####
+    # Light DM set up
+    - name: 'Add configuration file for XFCE desktop on boot'
+      copy:
+        src: 'files/50-xfcesession.conf'
+        dest: '/etc/lightdm/lightdm.conf.d/50-xfcesession.conf'
+        mode: '0644'
+        owner: 'root'
+        group: 'root'
+      notify: 'lightdm-restart'
+      tags:
+        - 'services'
+        - 'lightdm'
+
+    - name: 'Allow autologin of ubuntu user'
+      user:
+        name: 'ubuntu'
+        append: 'yes'
+        groups:
+          - 'nopasswdlogin'
+          - 'docker'
+      notify: 'lightdm-restart'
+      tags:
+        - 'services'
+        - 'lightdm'
+
+    - name: 'Start LightDM service'
+      service:
+        name: 'lightdm'
+        state: 'started'
+        enabled: true
+      tags:
+        - 'services'
+        - 'lightdm'
+
+    ## Custom
+
+    - name: 'AWS tasks'
+      include_tasks: aws.yml
+      args:
+        apply:
+          tags:
+            - aws
+
+    - name: 'Custom scripts'
+      include_tasks: scripts.yml
+      args:
+        apply:
+          tags:
+            - scripts
+            
+    - name: 'Auth/SSH'
+      include_tasks: auth-ssh.yml
+      args:
+        apply:
+          tags:
+            - auth-ssh
+
+    - name: 'Application'
+      include_tasks: app.yml
+      args:
+        apply:
+          tags:
+            - app
+  #####
+  # HANDLERS
+  handlers:
+    - name: 'lightdm-restart'
+      service:
+        name: 'lightdm'
+        state: 'restarted'
+      tags:
+        - 'services'
+        - 'lightdm'
+
+    - name: 'dnsmasq-restart'
+      service:
+        name: 'dnsmasq'
+        state: 'restarted'
+      tags:
+        - 'services'
+        - 'dns'

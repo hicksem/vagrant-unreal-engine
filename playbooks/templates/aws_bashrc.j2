@@ -1,0 +1,4 @@
+export AWS_SECRET_ACCESS_KEY={{ aws_config['secret_access_key'] }}
+export AWS_ACCESS_KEY_ID={{ aws_config['access_key_id'] }}
+export AWS_DEFAULT_REGION={{ aws_config['default_region'] }}
+export AWS_DEFAULT_OUTPUT={{ aws_config['output'] | default('json') }}

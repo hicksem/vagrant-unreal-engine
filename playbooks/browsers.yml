@@ -1,0 +1,32 @@
+- name: 'Get Google Chrome aptitude key'
+  apt_key:
+    url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'
+    state: 'present'
+  tags:
+    - 'software'
+    - 'browsers'
+    - 'chrome'
+
+- name: 'Set up Google Chrome repo'
+  copy:
+    src: 'files/google-chrome.list'
+    dest: '/etc/apt/sources.list.d/google-chrome.list'
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+  tags:
+    - 'software'
+    - 'browsers'
+    - 'chrome'
+
+- name: 'Install browser packages'
+  apt:
+    name: 
+    - 'firefox'
+    - 'google-chrome-stable'
+    update_cache: 'yes' # Needed since we just added the repo
+  tags:
+    - 'software'
+    - 'browsers'
+    - 'firefox'
+    - 'chrome'

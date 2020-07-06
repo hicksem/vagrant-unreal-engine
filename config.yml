@@ -1,0 +1,17 @@
+---
+vm_config:
+  memory: 4096
+  cores: 2
+  hostname: 'base'
+
+host_config:
+  apt_packages:
+    - 'git'
+    - 'git-cola'
+  npm_packages:
+    - 'gulp'
+
+  aws_config:
+    secret_access_key: 'abcdefghijklmnopqrstuvwxyz'
+    access_key_id: '1234567890'
+    default_region: 'us-east-1'
