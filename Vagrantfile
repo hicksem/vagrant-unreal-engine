@@ -56,8 +56,9 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     # Customize the amount of memory on the VM:
-    vb.memory = "4096"    
+    vb.memory = 8192    
     vb.gui = true
+    vb.cpus = 3
   end
 
   config.ssh.forward_agent = true
