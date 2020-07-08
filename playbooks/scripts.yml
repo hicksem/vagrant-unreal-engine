@@ -1,10 +1,10 @@
 - name: 'Add Build UE4 shell command'
   copy:
     src: 'files/scripts/build-ue4.sh'
-    dest: '/home/ubuntu/build-ue4.sh'
+    dest: '/home/vagrant/build-ue4.sh'
     mode: '0755'
-    owner: 'ubuntu'
-    group: 'ubuntu'
+    owner: 'vagrant'
+    group: 'vagrant'
   tags:
     - 'scripts'
     - 'ue4'

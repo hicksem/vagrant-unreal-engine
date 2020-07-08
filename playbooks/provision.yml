@@ -2,26 +2,6 @@
 - hosts: all
   become: true
   tasks:
-    #####
-    # Install and start system services
-    - name: 'Install pre-requisite software'
-      apt:
-        name:
-        - 'virtualbox-guest-dkms'
-        - 'virtualbox-guest-utils'
-        - 'linux-image-extra-virtual'
-        - 'virtualbox-guest-x11'
-      tags:
-        - 'packages'
-        - 'apt'
-
-    - name: 'set timezone'
-      timezone:
-        name: America/New_York
-      tags:
-        - 'settings'
-        - 'tz'
-        
     ## Custom
 
     - name: 'AWS tasks'
