@@ -1,9 +1,9 @@
 - name: 'Create SSH directory'
   file:
-    path: '/home/vagrant/.ssh'
+    path: '/home/ubuntu/.ssh'
     state: 'directory'
     mode: '0755'
-  become_user: 'vagrant'
+  become_user: 'ubuntu'
   ignore_errors: 'yes'
   tags:
     - 'setup'
@@ -13,12 +13,12 @@
 - name: 'Add SSH key for AWS'
   copy:
     src: 'files/id_rsa_aws'
-    dest: '/home/vagrant/.ssh/id_rsa_aws'
-    owner: 'vagrant'
-    group: 'vagrant'
+    dest: '/home/ubuntu/.ssh/id_rsa_aws'
+    owner: 'ubuntu'
+    group: 'ubuntu'
     mode: '0600'
   become: true
-  become_user: 'vagrant'
+  become_user: 'ubuntu'
   ignore_errors: 'yes'
   tags:
     - 'setup'
@@ -28,12 +28,12 @@
 - name: 'Add SSH key for GitHub'
   copy:
     src: 'files/id_rsa_vagrant'
-    dest: '/home/vagrant/.ssh/id_rsa_vagrant'
-    owner: 'vagrant'
-    group: 'vagrant'
+    dest: '/home/ubuntu/.ssh/id_rsa_vagrant'
+    owner: 'ubuntu'
+    group: 'ubuntu'
     mode: '0600'
   become: true
-  become_user: 'vagrant'
+  become_user: 'ubuntu'
   ignore_errors: 'yes'
   tags:
     - 'setup'
@@ -43,12 +43,12 @@
 - name: 'Configure SSH key for GitHub and AWS'
   template:
     src: 'templates/ssh_config.j2'
-    dest: '/home/vagrant/.ssh/config'
-    owner: 'vagrant'
-    group: 'vagrant'
+    dest: '/home/ubuntu/.ssh/config'
+    owner: 'ubuntu'
+    group: 'ubuntu'
     mode: '0644'
   become: true
-  become_user: 'vagrant'
+  become_user: 'ubuntu'
   ignore_errors: 'yes'
   tags:
     - 'setup'
